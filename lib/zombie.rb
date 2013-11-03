@@ -2,8 +2,9 @@ class Zombie
   attr_accessor :tweets, :iq
 
   def initialize(options = {})
-    @tweets = options[:tweets]
-    @iq = 0
+    @name = options[:name]
+    @tweets = options[:tweets] || []
+    @iq = options[:iq] || 0
   end
 
   def eat_brains
