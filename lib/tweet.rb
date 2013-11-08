@@ -1,8 +1,9 @@
 class Tweet
-  attr_accessor :status
+  attr_accessor :status, :message
 
   def initialize(options={})
     self.status = options[:status]
+    @message = options[:message]
   end
 
   def public?

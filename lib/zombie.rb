@@ -1,12 +1,24 @@
 class Zombie
   attr_accessor :tweets, :iq
 
+  class NotSmartEnoughError < StandardError; end
+
   def initialize(options = {})
-    @tweets = options[:tweets]
-    @iq = 0
+    @name = options[:name]
+    @tweets = options[:tweets] || []
+    @iq = options[:iq] || 0
   end
 
   def eat_brains
     @iq += 3
+  end
+
+  def genius?
+    iq >= 3
+  end
+
+  def make_decision!
+    raise NotSmartEnoughError unless genius?
+    return true
   end
 end
