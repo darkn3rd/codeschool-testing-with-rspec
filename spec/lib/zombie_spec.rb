@@ -2,27 +2,31 @@ require 'spec_helper'
 require 'zombie'
 
 describe Zombie do
-  it 'includes a tweet' do
-    tweet = Tweet.new
-    zombie = Zombie.new(tweets: [tweet])
-    zombie.tweets.should include(tweet)
+
+  context "eating brains" do
+    subject(:zombie) { Zombie.new }
+    it {
+      expect { zombie.eat_brains }.to change { zombie.iq }.by(3)
+    }
   end
 
-  it 'gains 3 IQ points by eating brains' do
-    zombie = Zombie.new
-    expect { zombie.eat_brains }.to change { zombie.iq }.by(3)
+  context "low iq zombie" do
+    subject(:zombie) { Zombie.new }
+
+    it {
+      expect { zombie.make_decision! }.to raise_error(
+        Zombie::NotSmartEnoughError
+      )
+    }
+
+    it { should_not be_genius }
+    its(:iq) { should == 0 }
   end
 
-  it 'increases the number of tweets' do
-    zombie = Zombie.new(name: 'Ash')
-    zombie.tweets << Tweet.new(message: "Arrrgggggggghhhhh")
-    zombie.should have(1).tweets
-  end
+  context "high iq zombie" do
+    subject { Zombie.new(iq: 3) }
 
-  it 'raises a Zombie::NotSmartEnoughError if not able to make a decision' do
-    zombie = Zombie.new
-    expect { zombie.make_decision! }.to raise_error(
-      Zombie::NotSmartEnoughError
-    )
+    it { should be_genius }
+    its(:brains_eaten_count) { should == 1 }
   end
 end
