@@ -15,9 +15,9 @@ describe Zombie do
   context "low iq zombie" do
     subject(:zombie) { Zombie.new }
 
-    it { expect { zombie.make_decision! }.to raise_error(Zombie::NotSmartEnoughError) }
-    it { should_not be_genius }
     its(:iq) { should == 0 }
+    it { expect { zombie.make_decision! }.to raise_error(Zombie::NotSmartEnoughError) }
+    it_behaves_like 'the brainless'
   end
 
   context "high iq zombie" do
