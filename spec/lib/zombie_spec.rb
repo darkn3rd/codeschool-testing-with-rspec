@@ -20,7 +20,7 @@ describe Zombie do
     it_behaves_like 'the brainless'
   end
 
-  context "high iq zombie" do
+  context "high iq zombie", focus: true do
     subject { Zombie.new(iq: 3) }
 
     it { should be_genius }
