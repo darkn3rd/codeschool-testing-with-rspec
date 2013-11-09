@@ -16,6 +16,10 @@ class Zombie
     iq >= 3
   end
 
+  def dummy?
+    iq < 3
+  end
+
   def make_decision!
     raise NotSmartEnoughError unless genius?
     return true
